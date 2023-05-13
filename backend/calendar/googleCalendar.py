@@ -41,20 +41,22 @@ class GoogleCalendar():
 
 			# Call the Calendar API
 			now = datetime.datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
-			print('Getting the upcoming 10 events')
+			end = (datetime.datetime.utcnow() + datetime.timedelta(days=21)).isoformat() + 'Z'
 			events_result = service.events().list(calendarId='primary', timeMin=now,
-												maxResults=10, singleEvents=True,
+												timeMax=end, singleEvents=True,
 												orderBy='startTime').execute()
 			events = events_result.get('items', [])
 
 			if not events:
 				print('No upcoming events found.')
 				return
-
-			# Prints the start and name of the next 10 events
+			
+			events_list = []
 			for event in events:
-				start = event['start'].get('dateTime', event['start'].get('date'))
-				print(start, event['summary'])
+				start = datetime.datetime.fromisoformat(event['start'].get('dateTime', event['start'].get('date')), )
+				end = datetime.datetime.fromisoformat(event['end'].get('dateTime', event['end'].get('date')))
+				
+				print(start, end, event['summary'])
 
 		except HttpError as error:
 			print('An error occurred: %s' % error)
