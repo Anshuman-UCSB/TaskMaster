@@ -63,3 +63,40 @@ class GoogleCalendar():
 			print('An error occurred: %s' % error)
 
 		return events_list
+	
+	def createEvent(self, start, end, name, description):
+		try:
+			service = build('calendar', 'v3', credentials=self.creds)
+
+			event = {
+				'summary': name,
+				'description': description,
+				'start': {
+					'dateTime': start,
+					'timeZone': 'America/Los_Angeles',
+				},
+				'end': {
+					'dateTime': end,
+					'timeZone': 'America/Los_Angeles',
+				},
+				'reminders': {
+					'useDefault': False,
+					'overrides': [
+						{'method': 'email', 'minutes': 24 * 60},
+						{'method': 'popup', 'minutes': 10},
+					],
+				},
+			}
+
+			event = service.events().insert(calendarId='primary', body=event).execute()
+			print('Event created: %s' % (event.get('htmlLink')))
+			return 'Event created: %s' % (event.get('htmlLink'))
+
+		except HttpError as error:
+			print('An error occurred: %s' % error)
+		
+		return 'stub'
+		
+
+	def deleteEvents(self):
+		return 'stub'
