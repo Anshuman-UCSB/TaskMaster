@@ -36,6 +36,7 @@ class GoogleCalendar():
 				token.write(self.creds.to_json())
 
 	def parseEvents(self):
+		events_list = []
 		try:
 			service = build('calendar', 'v3', credentials=self.creds)
 
@@ -51,12 +52,14 @@ class GoogleCalendar():
 				print('No upcoming events found.')
 				return
 			
-			events_list = []
 			for event in events:
 				start = datetime.datetime.fromisoformat(event['start'].get('dateTime', event['start'].get('date')), )
 				end = datetime.datetime.fromisoformat(event['end'].get('dateTime', event['end'].get('date')))
 				
+				events_list.append([start, end, event['summary']])
 				print(start, end, event['summary'])
 
 		except HttpError as error:
 			print('An error occurred: %s' % error)
+
+		return events_list
