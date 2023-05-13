@@ -9,6 +9,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+from utils import *
 
 class GoogleCalendar():
 	def __init__(self):
@@ -35,7 +36,9 @@ class GoogleCalendar():
 			with open('../../token.json', 'w') as token:
 				token.write(self.creds.to_json())
 
-	def parseEvents(self):
+	def parseEvents(self, debug=False):
+		if debug == False:
+			print = lambda *args, **kwargs:None
 		events_list = []
 		try:
 			service = build('calendar', 'v3', credentials=self.creds)
@@ -63,7 +66,25 @@ class GoogleCalendar():
 			print('An error occurred: %s' % error)
 
 		return events_list
-	
+
+	def getAvailableTime(self, duration):
+		events = self.parseEvents()
+		bid = getNextHour()
+		while bid < addWeeks(bid,3):
+			for s,e,_ in events:
+				print(bid, s,e,sep=' || ')
+				try:
+					if s<=bid<=e or s<=addMinutes(bid, duration)<=e:
+						break
+				except:
+					print("skiping day")
+			else:
+				return bid
+			bid = addMinutes(bid, 15)
+					
+		return bid
+		
+
 	def createEvent(self, start, end, name, description):
 		try:
 			service = build('calendar', 'v3', credentials=self.creds)
