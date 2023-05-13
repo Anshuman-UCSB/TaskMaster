@@ -98,5 +98,28 @@ class GoogleCalendar():
 		return 'stub'
 		
 
-	def deleteEvents(self):
+	def deleteEvents(self, name = 'API test event'):
+		try:
+			service = build('calendar', 'v3', credentials=self.creds)
+
+			now = (datetime.datetime.utcnow() - datetime.timedelta(days=2)).isoformat() + 'Z'  # 'Z' indicates UTC time
+			end = (datetime.datetime.utcnow() + datetime.timedelta(days=21)).isoformat() + 'Z'
+			events_result = service.events().list(calendarId='primary', timeMin=now,
+												timeMax=end, singleEvents=True,
+												orderBy='startTime').execute()
+			events = events_result.get('items', [])
+			# print('events', events)
+
+			if not events:
+				print('No upcoming events found.')
+				return
+			
+			for event in events:
+				if event['summary'] == name:
+					service.events().delete(calendarId='primary', eventId=event['id']).execute()
+					print('deleted event', event['id'])	
+
+		except HttpError as error:
+			print('An error occurred: %s' % error)
+		
 		return 'stub'
