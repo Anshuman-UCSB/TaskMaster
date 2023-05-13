@@ -1,4 +1,5 @@
 import React from 'react';
+import Login from './login';
 
 function Header() {
     return (
@@ -6,7 +7,7 @@ function Header() {
         <h1>
             Placeholder title lol
         </h1>
-
+        <Login />
       </div>
     );
   }
