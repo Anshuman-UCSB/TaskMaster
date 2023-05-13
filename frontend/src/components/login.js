@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
@@ -7,7 +7,7 @@ import { client } from '../client';
 import jwt_decode from "jwt-decode";
 
 const Login = () => {
-  const navigate = useNavigate();
+//   const navigate = useNavigate();
 
   const responseGoogle = (response) => {
    //console.log(response);
@@ -21,17 +21,19 @@ const Login = () => {
       userName: name,
       image: picture,
     };
-    client.createIfNotExists(doc).then(() => {
-      navigate('/', { replace: true });
-    });
-
+    console.log(doc);
+    // client.createIfNotExists(doc).then(() => {
+    //   navigate('/', { replace: true });
+    // });
+    
   }
 
   return (
     <div className="">
           <div className="">
             <GoogleOAuthProvider 
-                clientId={`${process.env.REACT_APP_GOOGLE_API_TOKEN}`}
+                // clientId={`${process.env.REACT_APP_GOOGLE_API_TOKEN}`}
+                clientId={client}
                 >
              <GoogleLogin
               render={(renderProps) => (
