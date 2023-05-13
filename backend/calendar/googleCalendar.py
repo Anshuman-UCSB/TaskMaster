@@ -11,6 +11,9 @@ from googleapiclient.errors import HttpError
 
 from utils import *
 
+DEBUG_PRINT = False
+debug = lambda *args,**kwargs: print(*args,**kwargs) if DEBUG_PRINT else None
+
 class GoogleCalendar():
 	def __init__(self):
 		self.getCreds()
@@ -36,9 +39,7 @@ class GoogleCalendar():
 			with open('../../token.json', 'w') as token:
 				token.write(self.creds.to_json())
 
-	def parseEvents(self, debug=False):
-		if debug == False:
-			print = lambda *args, **kwargs:None
+	def parseEvents(self):
 		events_list = []
 		try:
 			service = build('calendar', 'v3', credentials=self.creds)
@@ -52,7 +53,7 @@ class GoogleCalendar():
 			events = events_result.get('items', [])
 
 			if not events:
-				print('No upcoming events found.')
+				debug('No upcoming events found.')
 				return
 			
 			for event in events:
@@ -60,27 +61,30 @@ class GoogleCalendar():
 				end = datetime.datetime.fromisoformat(event['end'].get('dateTime', event['end'].get('date')))
 				
 				events_list.append([start, end, event['summary']])
-				print(start, end, event['summary'])
+				debug(start, end, event['summary'])
 
 		except HttpError as error:
-			print('An error occurred: %s' % error)
+			debug('An error occurred: %s' % error)
 
 		return events_list
 
-	def getAvailableTime(self, duration):
+	def getAvailableTime(self, duration, start=9, end=0):
+
 		events = self.parseEvents()
 		bid = getNextHour()
 		while bid < addWeeks(bid,3):
 			for s,e,_ in events:
-				print(bid, s,e,sep=' || ')
+				debug(bid, s,e,sep=' || ')
 				try:
-					if s<=bid<=e or s<=addMinutes(bid, duration)<=e:
+					if s<=bid<=e or s<=addMinutes(bid, duration)<=e or not isWorkingHours(addMinutes(bid, duration),start,end):
+						debug("found a conflict")
+						debug(s<=bid<=e , s<=addMinutes(bid, duration)<=e , not isWorkingHours(addMinutes(bid, duration),start,end))
 						break
 				except:
-					print("skiping day")
+					debug("skiping day")
 			else:
 				return bid
-			bid = addMinutes(bid, 15)
+			bid = incrementTime(bid, 15, start, end)
 					
 		return bid
 		
@@ -110,11 +114,11 @@ class GoogleCalendar():
 			}
 
 			event = service.events().insert(calendarId='primary', body=event).execute()
-			print('Event created: %s' % (event.get('htmlLink')))
+			debug('Event created: %s' % (event.get('htmlLink')))
 			return 'Event created: %s' % (event.get('htmlLink'))
 
 		except HttpError as error:
-			print('An error occurred: %s' % error)
+			debug('An error occurred: %s' % error)
 		
 		return 'stub'
 		
