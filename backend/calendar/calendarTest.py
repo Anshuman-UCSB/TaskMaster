@@ -1,4 +1,5 @@
 from googleCalendar import GoogleCalendar
+from utils import *
 
 calendar = GoogleCalendar()
 # calendar.parseEvents()
