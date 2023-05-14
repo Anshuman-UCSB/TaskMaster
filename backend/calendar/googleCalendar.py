@@ -32,7 +32,7 @@ class GoogleCalendar():
 				self.creds.refresh(Request())
 			else:
 				flow = InstalledAppFlow.from_client_secrets_file(
-					'../credentials.json', self.SCOPES)
+					'../credentials.json', self.SCOPES, redirect_uri = 'http://localhost:3000')
 				self.creds = flow.run_local_server(port=0)
 			# Save the credentials for the next run
 			with open('../token.json', 'w') as token:
