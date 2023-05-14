@@ -43,7 +43,7 @@ const Load = () => {
   useEffect(() => {
       let timeout;
       if (messageIndex < OUTPUTS.length-1) {
-          timeout = setTimeout(() => setMessageIndex(messageIndex + 1), 2000);
+          timeout = setTimeout(() => setMessageIndex(messageIndex + 1), 500+3000*Math.random());
       } 
 
       return () => {

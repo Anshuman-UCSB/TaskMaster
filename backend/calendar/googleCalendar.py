@@ -74,7 +74,7 @@ class GoogleCalendar():
 			for s,e,_ in events:
 				debug(bid, s,e,sep=' || ')
 				try:
-					if s<=bid<=e or s<=addMinutes(bid, duration)<=e or not isWorkingHours(addMinutes(bid, duration),start,end):
+					if s<=bid<=e or s<=addMinutes(bid, duration)<=e or s<=bid<=e or bid<=s<=addMinutes(bid, duration) or not isWorkingHours(addMinutes(bid, duration),start,end):
 						debug("found a conflict")
 						debug(s<=bid<=e , s<=addMinutes(bid, duration)<=e , not isWorkingHours(addMinutes(bid, duration),start,end))
 						break

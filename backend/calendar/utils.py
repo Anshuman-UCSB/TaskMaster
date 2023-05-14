@@ -5,7 +5,7 @@ def getNextHour():
 	pst=pytz.timezone('US/Pacific')
 
 	bid = datetime.datetime.now().replace(microsecond=0, second=0, minute=0)
-	bid = addMinutes(bid, 3*60)
+	bid = addMinutes(bid, 20*60+3*60)
 
 	return pst.localize(bid)
 
