@@ -38,7 +38,7 @@ const Login = () => {
     <Grid item xs={6}>
       <div className="intro">
         <h3 className="intro-text">Introducing the ultimate solution to managing your daily tasks and assignments - our cutting-edge task scheduler!</h3> 
-        <p className="intro-text">Designed with convenience in mind, this powerful tool automatically scrapes assignments from your various platforms and integrates them into your personal calendar as to-do items. With our task scheduler, you can say goodbye to missed deadlines and forgotten tasks, and say hello to a more organized and efficient workflow. Whether you're a busy professional, a student with a heavy workload, or simply looking for a better way to manage your daily tasks, our task scheduler is the perfect solution for you. Try it out today and take the first step towards a more productive and stress-free life!</p>
+        <p className="intro-text">Designed with convenience in mind, this powerful tool automatically parses assignments, creates bite-sized subtasks, and integrates them into your personal calendar as to-do items. With our task scheduler, you can say goodbye to missed deadlines and forgotten tasks, and say hello to a more organized and efficient workflow. Whether you're a busy professional, a student with a heavy workload, or simply looking for a better way to manage your daily tasks, our all in one task tool is the perfect solution for you. Try it out today and take the first step towards a more productive and stress-free life!</p>
       </div>
     </Grid>
     <Grid item xs={6}>

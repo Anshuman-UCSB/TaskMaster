@@ -42,7 +42,7 @@ function Form() {
     // }
 
     function submitInfo() {
-      alert("Adding events to calendar!");
+      // alert("Adding events to calendar!");
       // if text => get text; if pdf => get text from pdf and send to backend
       console.log(text);
       let postData = {
