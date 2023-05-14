@@ -68,6 +68,11 @@ function Form() {
     //   setText(value);
     // }
 
+    function handleTextChange(change) {
+      setText(change);
+      setFinished(false);
+    }
+
     function submitInfo() {
       // alert("Adding events to calendar!");
       // if text => get text; if pdf => get text from pdf and send to backend
@@ -107,6 +112,9 @@ function Form() {
           setFinished(true);
           return true;
       });
+      if (finished){
+        setFinished(false);
+      }
       setFinished(true);
       // setTimeout(setFinished(false), 50000);
       setText("");
@@ -152,7 +160,7 @@ function Form() {
         {(type) === "text" && 
         <TextField 
         value={text}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e) => handleTextChange(e.target.value)}
         fullWidth
         id="outlined-basic" 
         label="Assignment" 
