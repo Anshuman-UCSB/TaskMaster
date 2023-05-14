@@ -14,9 +14,10 @@ class GPT:
 		self.messages.append({"role": "user", "content": message})
 		response = openai.ChatCompletion.create(
 			model="gpt-3.5-turbo",
+			temperature=0,
 			messages=self.messages
 		)
-		self.messages.append({"role": "assistant", "content": response["choices"][0]["message"].content})
+		self.messages.pop()
 		return response["choices"][0]["message"]['content']
 
 if __name__=="__main__":
