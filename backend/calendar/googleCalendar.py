@@ -89,10 +89,10 @@ class GoogleCalendar():
 		return bid
 		
 
-	def createEvent(self, start, end, name, description):
+	def createEvent(self, start, end, name, description,color_id):
 		try:
 			service = build('calendar', 'v3', credentials=self.creds)
-			
+
 			event = {
 				'summary': name,
 				'description': description,
@@ -111,7 +111,7 @@ class GoogleCalendar():
 						{'method': 'popup', 'minutes': 10},
 					],
 				},
-				'colorId':'11',
+				'colorId':color_id,
 			}
 
 			event = service.events().insert(calendarId='primary', body=event).execute()

@@ -5,6 +5,7 @@ from flask_cors import CORS
 from gpt.chatgpt import GPT
 import json
 import os, sys
+from random import randint
 import re
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "calendar"))
@@ -28,7 +29,8 @@ def processAssignment(text):
 	#  = processed['']
 	course_name = processed['course_name']
 	gc = GoogleCalendar()
-	for task in processed['tasks']:
+	color_id = str(randint(1,11))
+	for n,task in enumerate(processed['tasks']):
 		task_name,task_duration = task.values()
 		print(f"{task_duration=},{task_name=}")
 		if type(task_name) is int:
@@ -39,8 +41,9 @@ def processAssignment(text):
 		task_time = gc.getAvailableTime(task_duration)
 		gc.createEvent(task_time,
 				utils.addMinutes(task_time, task_duration),
-				course_name+" assignment",
+				course_name+" assignment part "+str(n+1),
 				task['subtask'],
+				color_id
 				)
 
 @app.route('/', methods=['GET'])
