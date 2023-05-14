@@ -8,16 +8,16 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#858bca',
       light: '#bdebd7',
-      dark: '#73cea7',
-      contrastText: '#ffffff',
+      main: '#73cea7',
+      dark: '#bdebd7',
+      contrastText: '#000',
     },
     secondary: {
-      main: '#858bca',
-      light: '#c8cbe9',
-      dark: '#858bca',
-      contrastText: '#000000',
+      light: '#000',
+      main: '#000',
+      dark: '#000',
+      contrastText: '#000',
     },
   },
 });
@@ -53,34 +53,41 @@ function Form() {
 
     return (
       <div className="form">
+        <ThemeProvider theme={theme}>
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} flexDirection="row">
-        <Grid item xs={2} justifyContent="flex-end">
-          <div className="toggleButtons">
-            <ToggleButtonGroup
-            color="primary"
-            value={type}
-            exclusive
-            onChange={handleChange}
-            // aria-label="Platform"
-            >
-                <ToggleButton value="text">Text</ToggleButton>
-                <ToggleButton value="file">File</ToggleButton>
-            </ToggleButtonGroup>
-          </div>
-          </Grid>
-          <Grid item xs={2} justifyContent="flex-end">
-            <ThemeProvider theme={theme}>
-              <div className="submitButton"> 
-              <Button color ="secondary"
-                onClick={submitInfo}>Submit</Button>
-                </div>
-            </ThemeProvider>
-          </Grid>
+      <Grid item xs={12}>
+        <div className="toggle-button">
+        <ToggleButtonGroup
+        color="secondary"
+        value={type}
+        exclusive
+        onChange={handleChange}
+        aria-label="Platform"
+        style={{
+        backgroundColor: "#73cea7",
+    }}
+        >
+            <ToggleButton value="text">Text</ToggleButton>
+            <ToggleButton value="file">File</ToggleButton>
+        </ToggleButtonGroup>
+        </div>
+        </Grid>
+        <Grid item xs={12}>
+        <Button 
+        variant="contained"
+        onClick={submitInfo}
+        style={{
+        backgroundColor: "##bdebd7",
+        }}
+        >Submit</Button>
+        </Grid>
+
       </Grid>
         <div className="text-form-field">
               {(type) === "file" && <Filedrop/>}
               {(type) === "text" && <Textinput onChange={(v) => {console.log("changed"); setText(v.target.value);}}/>}
         </div>
+        </ThemeProvider>
       </div>
     );
   }
