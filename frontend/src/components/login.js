@@ -23,7 +23,7 @@ const Login = () => {
       userName: name,
       image: picture,
     };
-    console.log(doc);
+    console.log(localStorage);
     // client.createIfNotExists(doc).then(() => {
     //   navigate('/', { replace: true });
     // });

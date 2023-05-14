@@ -1,5 +1,5 @@
 import {React, useState, setState} from 'react';
-import {ToggleButtonGroup, ToggleButton, Button, Grid, Item} from '@mui/material';
+import {ToggleButtonGroup, ToggleButton, Button, Grid, Item, TextField} from '@mui/material';
 import Filedrop from './filedrop.js';
 import Textinput from './textinput.js';
 
@@ -14,15 +14,35 @@ function Form() {
       setType(value);
     }
 
+    function handleTextChange(e, value) {
+      console.log("value: ", value);
+      setText(value);
+    }
+
     function submitInfo() {
       alert("Adding events to calendar!");
       // if text => get text; if pdf => get text from pdf and send to backend
-      if (type === "text") {
-        console.log(text.length);
-        console.log(text);
-      } else {
-
+      console.log(text);
+      let postData = {
+        "text": text,
       }
+
+      const textInfoUrl = new URL("localhost:5000/assignment/text");
+      fetch(textInfoUrl, {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(postData)
+        })
+        .then(r => r.json())
+        .then(data => {
+          console.log(data);
+          return true;
+      });
+    
+      // localhost:5000/assignment/text
     }
 
     // let input;
@@ -49,7 +69,18 @@ function Form() {
         </Grid>
         <Grid item xs={12}>
         {(type) === "file" && <Filedrop />}
-        {(type) === "text" && <Textinput onChange={(v) => {console.log("changed"); setText(v.target.value);}}/>}
+        {(type) === "text" && 
+        <TextField 
+        onChange={(e) => setText(e.target.value)}
+        fullWidth
+        id="outlined-basic" 
+        label="Assignment" 
+        variant="outlined" 
+        multiline
+        rows={15}
+        width='100vw'
+        />
+        }
         </Grid>
         <Grid item xs={12}>
         <Button 
