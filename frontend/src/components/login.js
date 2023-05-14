@@ -7,7 +7,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 import { client } from '../client';
 import jwt_decode from "jwt-decode";
-import schedule from "./images/sched.png";
+import schedule from "./images/scheduler.png";
 
 const Login = () => {
   // console.log(ControlsContext);
@@ -18,16 +18,15 @@ const Login = () => {
     console.log(response);
     const userObject = jwt_decode(response.credential);
     console.log(response);
-    console.log(userObject);
-    //console.log(userObject);
-    localStorage.setItem('user', JSON.stringify(userObject));
-    const { name, sub, picture } = userObject;
-    const doc = {
-      _id: sub,
-      _type: 'user',
-      userName: name,
-      image: picture,
-    };
+    console.log("USER OBJ:", userObject);
+    // localStorage.setItem('user', JSON.stringify(userObject));
+    // const { name, sub, picture } = userObject;
+    // const doc = {
+    //   _id: sub,
+    //   _type: 'user',
+    //   userName: name,
+    //   image: picture,
+    // };
     console.log(localStorage);
 
     // set logged in to true!
