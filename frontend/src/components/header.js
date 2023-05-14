@@ -12,7 +12,7 @@ function Header() {
             <Grid container spacing = {2}>
               <Grid item xs={4}>
                 <div className="logo-image">
-                  <img src={logo} className="logo-image-2"/>
+                  <img src={logo} className="logo-image-2" alt="logo"/>
                 </div>
               </Grid>
               <Grid item xs={4}>

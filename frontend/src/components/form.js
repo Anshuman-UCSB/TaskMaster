@@ -11,16 +11,18 @@ const theme = createTheme({
       light: '#bdebd7',
       main: '#73cea7',
       dark: '#bdebd7',
-      contrastText: '#000',
+      contrastText: '#fff',
     },
     secondary: {
-      light: '#000',
-      main: '#000',
-      dark: '#000',
-      contrastText: '#000',
+      light: '#fff',
+      main: '#fff',
+      dark: '#fff',
+      contrastText: '#fff',
     },
   },
 });
+
+const outputs = ["...connecting to backend", "...integrating with openAI!", "...waiting for text generation", "...parsing response!", "...connecting to google calendar!", "...adding events to your calendar!", "...events added!", "done!"];
 
 // slider (text input or pdf)
 // button to add & send data to backend
@@ -78,17 +80,21 @@ function Form() {
       });
     
       // localhost:5000/assignment/text
+
     }
 
-    let input;
-    if (type === "file") {
-        input = <Filedrop />;
-    } else {
-        input = <Textinput onChange={(v) => setText(v.target.value)}/>;
-    }
+    // let input;
+    // if (type === "file") {
+    //     input = <Filedrop />;
+    // } else {
+    //     input = <Textinput onChange={(v) => setText(v.target.value)}/>;
+    // }
 
     return (
       <div className="form">
+      <div>
+        <br></br>
+      </div>
         <ThemeProvider theme={theme}>
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} flexDirection="row">
       <Grid item xs={12}>
@@ -109,6 +115,7 @@ function Form() {
         </div>
         </Grid>
         <Grid item xs={12}>
+        <div className="content-box">
         {(type) === "file" && <Filedrop />}
         {(type) === "text" && 
         <TextField 
@@ -122,6 +129,7 @@ function Form() {
         width='100vw'
         />
         }
+        </div>
         </Grid>
         <Grid item xs={12}>
         <Button 

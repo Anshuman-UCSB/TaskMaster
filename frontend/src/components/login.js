@@ -7,6 +7,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 import { client } from '../client';
 import jwt_decode from "jwt-decode";
+import schedule from "./images/sched.png";
 
 const Login = () => {
   // console.log(ControlsContext);
@@ -35,10 +36,14 @@ const Login = () => {
 
   return (
     <Grid container alignItems="center" justifyContent="center">
-    <Grid item xs={12}>
-      <div>
-        <p>aesthetic intro text here lmao</p>
+    <Grid item xs={6}>
+      <div className="intro">
+        <h3 className="intro-text">Introducing the ultimate solution to managing your daily tasks and assignments - our cutting-edge task scheduler!</h3> 
+        <p className="intro-text">Designed with convenience in mind, this powerful tool automatically scrapes assignments from your various platforms and integrates them into your personal calendar as to-do items. With our task scheduler, you can say goodbye to missed deadlines and forgotten tasks, and say hello to a more organized and efficient workflow. Whether you're a busy professional, a student with a heavy workload, or simply looking for a better way to manage your daily tasks, our task scheduler is the perfect solution for you. Try it out today and take the first step towards a more productive and stress-free life!</p>
       </div>
+    </Grid>
+    <Grid item xs={6}>
+      <img src={schedule} className="schedule-image" alt="schedule" />
     </Grid>
     <Grid item xs={2}>
     <div className="login-button">
