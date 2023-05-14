@@ -3,7 +3,12 @@
 from flask import Flask,request
 from gpt.chatgpt import GPT
 import json
+import os, sys
 import re
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "calendar"))
+from googleCalendar import GoogleCalendar
+import utils
 
 app = Flask(__name__)
 
@@ -16,12 +21,20 @@ def processAssignment(text):
 	print(resp)
 	processed = json.loads(resp)
 	# json_str = resp.split("```")[1].strip()
-	# json_str = resp.split("```")[1].strip()
 	# print(f"{json_str=}")
 	# processed = json.loads(json_str)
 	# title = processed['title']
 	#  = processed['']
-	print(processed)
+	course_name = processed['course_name']
+	gc = GoogleCalendar()
+	for task in processed['tasks']:
+		print(task, gc)
+		task_time = gc.getAvailableTime(task['duration'])
+		gc.createEvent(task_time,
+				utils.addMinutes(task_time, task['duration']),
+				course_name+" assignment",
+				task['subtask'],
+				)
 
 @app.route('/', methods=['GET'])
 def get():
