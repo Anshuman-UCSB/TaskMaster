@@ -23,6 +23,7 @@ const theme = createTheme({
 });
 
 const outputs = ["...connecting to backend", "...integrating with openAI!", "...waiting for text generation", "...parsing response!", "...connecting to google calendar!", "...adding events to your calendar!", "...events added!", "done!"];
+const delays = [.5,1,3,.5,.5,2,1]
 
 // slider (text input or pdf)
 // button to add & send data to backend
@@ -67,7 +68,7 @@ function Form() {
       const textInfoUrl = new URL("http://localhost:5000/assignment/text");
       fetch(textInfoUrl, {
           method: 'POST',
-          mode: 'no-cors',
+          mode: 'cors',
           headers: {
             'Content-Type': 'application/json'
           },
