@@ -7,17 +7,17 @@ import Textinput from './textinput.js';
 // button to add & send data to backend
 
 function Form() {
-    const [type, setType] = useState("file");
+    const [type, setType] = useState("text");
     const [text, setText] = useState("");
 
     function handleChange(e, value) {
       setType(value);
     }
 
-    function handleTextChange(e, value) {
-      console.log("value: ", value);
-      setText(value);
-    }
+    // function handleTextChange(e, value) {
+    //   console.log("value: ", value);
+    //   setText(value);
+    // }
 
     function submitInfo() {
       alert("Adding events to calendar!");
@@ -27,10 +27,12 @@ function Form() {
         "text": text,
       }
 
-      const textInfoUrl = new URL("localhost:5000/assignment/text");
+      console.log(JSON.stringify(postData));
+
+      const textInfoUrl = new URL("http://localhost:5000/assignment/text");
       fetch(textInfoUrl, {
           method: 'POST',
-          mode: 'cors',
+          mode: 'no-cors',
           headers: {
             'Content-Type': 'application/json'
           },
@@ -56,6 +58,7 @@ function Form() {
       <div className="form">
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
       <Grid item xs={12}>
+        <div className="toggle-button">
         <ToggleButtonGroup
         color="primary"
         value={type}
@@ -66,6 +69,7 @@ function Form() {
             <ToggleButton value="text">Text</ToggleButton>
             <ToggleButton value="file">File</ToggleButton>
         </ToggleButtonGroup>
+        </div>
         </Grid>
         <Grid item xs={12}>
         {(type) === "file" && <Filedrop />}
