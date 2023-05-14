@@ -1,7 +1,7 @@
-import {React, useContext, useState} from 'react';
+import {React, useContext, useEffect, useState} from 'react';
 // import { useNavigate } from 'react-router-dom';
 import {ControlsContext} from '../App';
-import {Grid, Item} from '@mui/material';
+import {Grid, Item, Button} from '@mui/material';
 import { FcGoogle } from 'react-icons/fc';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
@@ -14,25 +14,19 @@ const Login = () => {
   // TODO: FIGURE OUT WHY THIS IS GETTING UNDERFINEDDD
   const {loggedIn, setLoggedIn} = useContext(ControlsContext);
 
-  const responseGoogle = (response) => {
-    console.log(response);
-    const userObject = jwt_decode(response.credential);
-    console.log(response);
-    console.log("USER OBJ:", userObject);
-    // localStorage.setItem('user', JSON.stringify(userObject));
-    // const { name, sub, picture } = userObject;
-    // const doc = {
-    //   _id: sub,
-    //   _type: 'user',
-    //   userName: name,
-    //   image: picture,
-    // };
-    console.log(localStorage);
-
-    // set logged in to true!
-    setLoggedIn(true);
+  function getCreds(){
+    const creds = new URL("http://localhost:5000/oauth");
+    fetch(creds, {
+        method: 'GET',
+        mode: 'cors',
+      })
+      .then(data => {
+        console.log(data);
+        setLoggedIn(true);
+        return true;
+    });
   }
-
+  
   return (
     <Grid container alignItems="center" justifyContent="center">
     <Grid item xs={6}>
@@ -44,29 +38,18 @@ const Login = () => {
     <Grid item xs={6}>
       <img src={schedule} className="schedule-image" alt="schedule" />
     </Grid>
-    <Grid item xs={2}>
+    <Grid item xs={6}>
     <div className="login-button">
           <div className="">
-            <GoogleOAuthProvider 
-                // clientId={`${process.env.REACT_APP_GOOGLE_API_TOKEN}`}
-                clientId={client}
-                >
-             <GoogleLogin
-              render={(renderProps) => (
-                <button
-                  type="button"
-                  className=""
-                  onClick={renderProps.onClick}
-                  disabled={renderProps.disabled}
-                >
-                  <FcGoogle className="" /> Sign in with google
-                </button>
-              )}
-              onSuccess={responseGoogle}
-              onFailure={responseGoogle}
-              cookiePolicy="single_host_origin"
-            />
-            </GoogleOAuthProvider>
+            <Button
+              variant="contained"
+              onClick={getCreds}
+              style={{
+                backgroundColor: "##ffffff",
+              }}
+            >
+              <FcGoogle className="" /> Sign in with google
+            </Button>
           </div>
     </div>
     </Grid>
@@ -75,3 +58,14 @@ const Login = () => {
 }
 
 export default Login
+
+
+  // < Grid item xs = { 12} >
+  //   <Button
+  //     variant="contained"
+  //     onClick={submitInfo}
+  //     style={{
+  //       backgroundColor: "##bdebd7",
+  //     }}
+  //   >Submit</Button>
+  //       </Grid >
