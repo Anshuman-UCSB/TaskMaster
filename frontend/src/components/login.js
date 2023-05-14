@@ -12,6 +12,8 @@ const Login = () => {
   const responseGoogle = (response) => {
    //console.log(response);
     const userObject = jwt_decode(response.credential);
+    console.log(response);
+    console.log(userObject);
     //console.log(userObject);
     localStorage.setItem('user', JSON.stringify(userObject));
     const { name, sub, picture } = userObject;
@@ -25,7 +27,7 @@ const Login = () => {
     // client.createIfNotExists(doc).then(() => {
     //   navigate('/', { replace: true });
     // });
-    
+
   }
 
   return (
