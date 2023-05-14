@@ -1,5 +1,6 @@
 import React from 'react';
 import Login from './login';
+import {ToggleButtonGroup, ToggleButton, Button, Grid, Item} from '@mui/material';
 import logo from './images/SBHacks-Logo.png';
 
 function Header() {
@@ -7,12 +8,16 @@ function Header() {
       <div className="header">
         <h1>
           <div class="wrapper">
-            <header1>
-              <div className="logo-image">
-                <img src={logo}/>
-              </div>
-              Taskey
-            </header1>
+            <Grid container spacing = {2}>
+              <Grid item xs={4}>
+                <div className="logo-image">
+                  <img src={logo} className="logo-image-2"/>
+                </div>
+              </Grid>
+              <Grid item xs={4}>
+                Taskey
+              </Grid>
+            </Grid>
           </div>
         </h1>
         <Login />

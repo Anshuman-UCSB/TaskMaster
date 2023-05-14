@@ -3,6 +3,25 @@ import {ToggleButtonGroup, ToggleButton, Button, Grid, Item} from '@mui/material
 import Filedrop from './filedrop.js';
 import Textinput from './textinput.js';
 
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#858bca',
+      light: '#bdebd7',
+      dark: '#73cea7',
+      contrastText: '#ffffff',
+    },
+    secondary: {
+      main: '#858bca',
+      light: '#c8cbe9',
+      dark: '#858bca',
+      contrastText: '#000000',
+    },
+  },
+});
+
 // slider (text input or pdf)
 // button to add & send data to backend
 
@@ -34,8 +53,8 @@ function Form() {
 
     return (
       <div className="form">
-      <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} flexDirection="column">
-        <Grid item s={6}>
+      <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} flexDirection="row">
+        <Grid item xs={2} justifyContent="flex-end">
           <div className="toggleButtons">
             <ToggleButtonGroup
             color="primary"
@@ -49,15 +68,19 @@ function Form() {
             </ToggleButtonGroup>
           </div>
           </Grid>
-          <Grid item xs={6} p={2}>
-          <submitButton 
-            onClick={submitInfo}>Submit</submitButton>
+          <Grid item xs={2} justifyContent="flex-end">
+            <ThemeProvider theme={theme}>
+              <div className="submitButton"> 
+              <Button color ="secondary"
+                onClick={submitInfo}>Submit</Button>
+                </div>
+            </ThemeProvider>
           </Grid>
-          <Grid item m={12}>
-          {(type) === "file" && <Filedrop/>}
-          {(type) === "text" && <Textinput onChange={(v) => {console.log("changed"); setText(v.target.value);}}/>}
-        </Grid>
       </Grid>
+        <div className="text-form-field">
+              {(type) === "file" && <Filedrop/>}
+              {(type) === "text" && <Textinput onChange={(v) => {console.log("changed"); setText(v.target.value);}}/>}
+        </div>
       </div>
     );
   }
