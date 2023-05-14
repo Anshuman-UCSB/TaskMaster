@@ -1,6 +1,7 @@
 # write a flask app that has one put endpoint
 
 from flask import Flask,request
+from flask_cors import CORS
 from gpt.chatgpt import GPT
 import json
 import os, sys
@@ -11,7 +12,7 @@ from googleCalendar import GoogleCalendar
 import utils
 
 app = Flask(__name__)
-
+CORS(app)
 preferences = None
 
 def processAssignment(text):
@@ -55,6 +56,8 @@ def postform():
 
 @app.route('/assignment/text', methods=['POST'])
 def posttext():
+	print("recieved this")
+	print("recieved",request.__dict__)
 	data = request.get_json()["text"]
 	print(data)
 	processAssignment(data)

@@ -27,7 +27,21 @@ function Form() {
         "text": text,
       }
 
-      const textInfoUrl = new URL("localhost:5000/assignment/text");
+      // const textInfoUrl = new URL("http://localhost:5000/");
+      // fetch(textInfoUrl, {
+      //     method: 'GET',
+      //     mode: 'no-cors',
+      //     headers: {
+      //       'Content-Type': 'application/json'
+      //     },
+      //     // body: JSON.stringify(postData)
+      //   })
+      //   // .then(r => r.json())
+      //   .then(data => {
+      //     console.log(data);
+      //     return true;
+      // });
+      const textInfoUrl = new URL("http://localhost:5000/assignment/text");
       fetch(textInfoUrl, {
           method: 'POST',
           mode: 'cors',
@@ -36,7 +50,7 @@ function Form() {
           },
           body: JSON.stringify(postData)
         })
-        .then(r => r.json())
+        // .then(r => r.json())
         .then(data => {
           console.log(data);
           return true;
