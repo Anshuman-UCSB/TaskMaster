@@ -1,9 +1,12 @@
-import {React, useState, setState} from 'react';
+import {React, useState, setState, useEffect} from 'react';
 import {ToggleButtonGroup, ToggleButton, Button, Grid, Item, TextField} from '@mui/material';
 import Filedrop from './filedrop.js';
 import Textinput from './textinput.js';
+// import Loading from './loading.js';
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const OUTPUTS = ["...connecting to backend", "...integrating with openAI!", "...waiting for text generation", "...parsing response!", "...connecting to google calendar!", "...adding events to your calendar!", "...events added!", "done!"];
 
 const theme = createTheme({
   palette: {
@@ -22,15 +25,39 @@ const theme = createTheme({
   },
 });
 
-const outputs = ["...connecting to backend", "...integrating with openAI!", "...waiting for text generation", "...parsing response!", "...connecting to google calendar!", "...adding events to your calendar!", "...events added!", "done!"];
-const delays = [.5,1,3,.5,.5,2,1]
-
 // slider (text input or pdf)
 // button to add & send data to backend
+
+const Load = () => {
+  const [messageIndex, setMessageIndex] = useState(0);
+  // const [time, setTime] = useState(0);
+  // function showText() {
+  //     for (let i = 0; i < 6; i++) {
+  //         setText(OUTPUTS[i]);
+  //         setTime(SEC_DELAYS[i]);
+  //     }
+
+      
+  // }
+
+  useEffect(() => {
+      let timeout;
+      if (messageIndex < OUTPUTS.length-1) {
+          timeout = setTimeout(() => setMessageIndex(messageIndex + 1), 2000);
+      } 
+
+      return () => {
+          clearTimeout(timeout);
+      }
+  }, [messageIndex]);
+
+  return <div><br />{OUTPUTS[messageIndex]}<br /><br /></div>;
+};
 
 function Form() {
     const [type, setType] = useState("text");
     const [text, setText] = useState("");
+    const [finished, setFinished] = useState(false);
 
     function handleChange(e, value) {
       setType(value);
@@ -42,7 +69,7 @@ function Form() {
     // }
 
     function submitInfo() {
-      alert("Adding events to calendar!");
+      // alert("Adding events to calendar!");
       // if text => get text; if pdf => get text from pdf and send to backend
       console.log(text);
       let postData = {
@@ -77,8 +104,12 @@ function Form() {
         // .then(r => r.json())
         .then(data => {
           console.log(data);
+          setFinished(true);
           return true;
       });
+      setFinished(true);
+      // setTimeout(setFinished(false), 50000);
+      setText("");
     
       // localhost:5000/assignment/text
 
@@ -94,7 +125,7 @@ function Form() {
     return (
       <div className="form">
       <div>
-        <br></br>
+        {finished ? <Load /> : <br></br>}
       </div>
         <ThemeProvider theme={theme}>
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} flexDirection="row">
@@ -120,6 +151,7 @@ function Form() {
         {(type) === "file" && <Filedrop />}
         {(type) === "text" && 
         <TextField 
+        value={text}
         onChange={(e) => setText(e.target.value)}
         fullWidth
         id="outlined-basic" 
@@ -144,6 +176,7 @@ function Form() {
 
       </Grid>
         </ThemeProvider>
+
       </div>
     );
   }
