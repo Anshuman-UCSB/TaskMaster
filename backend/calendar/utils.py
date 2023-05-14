@@ -5,7 +5,7 @@ def getNextHour():
 	pst=pytz.timezone('US/Pacific')
 
 	bid = datetime.datetime.now().replace(microsecond=0, second=0, minute=0)
-	bid = addMinutes(bid, 60)
+	bid = addMinutes(bid, 3*60)
 
 	return pst.localize(bid)
 
@@ -25,4 +25,3 @@ def incrementTime(date,inc,start,end):
 	while not isWorkingHours(bid,start, end):
 		bid = addMinutes(bid,inc)
 	return bid
-# print(workingHours(getNextHour(),None,None))

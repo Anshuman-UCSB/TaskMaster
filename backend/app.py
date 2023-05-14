@@ -50,6 +50,12 @@ def processAssignment(text):
 def get():
 	return "Hello World!"
 
+
+@app.route('/oauth', methods=['GET'])
+def getoauth():
+	GoogleCalendar()
+	return "Good"
+
 @app.route('/assignment/pdf', methods=['POST'])
 def postpdf():
 	data = request.get_json()
