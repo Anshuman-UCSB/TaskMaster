@@ -29,10 +29,16 @@ def processAssignment(text):
 	course_name = processed['course_name']
 	gc = GoogleCalendar()
 	for task in processed['tasks']:
-		print(task, gc)
-		task_time = gc.getAvailableTime(task['duration'])
+		task_name,task_duration = task.values()
+		print(f"{task_duration=},{task_name=}")
+		if type(task_name) is int:
+			print("swapping")
+			task_duration,task_name = task_name,task_duration
+		print(f"{task_duration=},{task_name=}")
+		task_duration = max(task_duration,60*4)
+		task_time = gc.getAvailableTime(task_duration)
 		gc.createEvent(task_time,
-				utils.addMinutes(task_time, task['duration']),
+				utils.addMinutes(task_time, task_duration),
 				course_name+" assignment",
 				task['subtask'],
 				)

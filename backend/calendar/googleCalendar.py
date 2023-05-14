@@ -111,6 +111,7 @@ class GoogleCalendar():
 						{'method': 'popup', 'minutes': 10},
 					],
 				},
+				'colorId':'11',
 			}
 
 			event = service.events().insert(calendarId='primary', body=event).execute()
