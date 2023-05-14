@@ -21,5 +21,6 @@ class GPT:
 		return response["choices"][0]["message"]['content']
 
 if __name__=="__main__":
-	gpt = GPT("respond only with the nerd emoji")
-	print(gpt.ask("hello"))
+	gpt = GPT(open('prompt.txt','r').read())
+	print(gpt.messages)
+	print(gpt.ask(open('example_assignment.txt','r').read()))
