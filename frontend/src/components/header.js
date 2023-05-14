@@ -3,6 +3,7 @@ import Login from './login';
 import {ToggleButtonGroup, ToggleButton, Button, Grid, Item} from '@mui/material';
 import logo from './images/SBHacks-Logo.png';
 
+
 function Header() {
     return (
       <div className="header">
@@ -20,7 +21,6 @@ function Header() {
             </Grid>
           </div>
         </h1>
-        <Login />
       </div>
     );
   }

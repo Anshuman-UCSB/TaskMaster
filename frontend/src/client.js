@@ -1,2 +1,2 @@
-const client="597358464627-cp1s8kim7r4th0hoojcvg0sthq2afn65.apps.googleusercontent.com";
+const client="597358464627-r7t3qkue45hasm3gk1pc45o6r7vsff7f.apps.googleusercontent.com";
 export {client};

@@ -1,5 +1,5 @@
 import {React, useState, setState} from 'react';
-import {ToggleButtonGroup, ToggleButton, Button, Grid, Item} from '@mui/material';
+import {ToggleButtonGroup, ToggleButton, Button, Grid, Item, TextField} from '@mui/material';
 import Filedrop from './filedrop.js';
 import Textinput from './textinput.js';
 
@@ -26,22 +26,58 @@ const theme = createTheme({
 // button to add & send data to backend
 
 function Form() {
-    const [type, setType] = useState("file");
+    const [type, setType] = useState("text");
     const [text, setText] = useState("");
 
     function handleChange(e, value) {
       setType(value);
     }
 
+    // function handleTextChange(e, value) {
+    //   console.log("value: ", value);
+    //   setText(value);
+    // }
+
     function submitInfo() {
       alert("Adding events to calendar!");
       // if text => get text; if pdf => get text from pdf and send to backend
-      if (type === "text") {
-        console.log(text.length);
-        console.log(text);
-      } else {
-
+      console.log(text);
+      let postData = {
+        "text": text,
       }
+
+
+      // const textInfoUrl = new URL("http://localhost:5000/");
+      // fetch(textInfoUrl, {
+      //     method: 'GET',
+      //     mode: 'no-cors',
+      //     headers: {
+      //       'Content-Type': 'application/json'
+      //     },
+      //     // body: JSON.stringify(postData)
+      //   })
+      //   // .then(r => r.json())
+      //   .then(data => {
+      //     console.log(data);
+      //     return true;
+      // });
+
+      const textInfoUrl = new URL("http://localhost:5000/assignment/text");
+      fetch(textInfoUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(postData)
+        })
+        // .then(r => r.json())
+        .then(data => {
+          console.log(data);
+          return true;
+      });
+    
+      // localhost:5000/assignment/text
     }
 
     let input;
@@ -73,6 +109,21 @@ function Form() {
         </div>
         </Grid>
         <Grid item xs={12}>
+        {(type) === "file" && <Filedrop />}
+        {(type) === "text" && 
+        <TextField 
+        onChange={(e) => setText(e.target.value)}
+        fullWidth
+        id="outlined-basic" 
+        label="Assignment" 
+        variant="outlined" 
+        multiline
+        rows={15}
+        width='100vw'
+        />
+        }
+        </Grid>
+        <Grid item xs={12}>
         <Button 
         variant="contained"
         onClick={submitInfo}
@@ -83,10 +134,6 @@ function Form() {
         </Grid>
 
       </Grid>
-        <div className="text-form-field">
-              {(type) === "file" && <Filedrop/>}
-              {(type) === "text" && <Textinput onChange={(v) => {console.log("changed"); setText(v.target.value);}}/>}
-        </div>
         </ThemeProvider>
       </div>
     );

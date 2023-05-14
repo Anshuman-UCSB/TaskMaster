@@ -1,5 +1,7 @@
-import React from 'react';
+import {React, useContext, useState} from 'react';
 // import { useNavigate } from 'react-router-dom';
+import {ControlsContext} from '../App';
+import {Grid, Item} from '@mui/material';
 import { FcGoogle } from 'react-icons/fc';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
@@ -7,10 +9,12 @@ import { client } from '../client';
 import jwt_decode from "jwt-decode";
 
 const Login = () => {
-//   const navigate = useNavigate();
+  // console.log(ControlsContext);
+  // TODO: FIGURE OUT WHY THIS IS GETTING UNDERFINEDDD
+  const {loggedIn, setLoggedIn} = useContext(ControlsContext);
 
   const responseGoogle = (response) => {
-   //console.log(response);
+    console.log(response);
     const userObject = jwt_decode(response.credential);
     console.log(response);
     console.log(userObject);
@@ -23,15 +27,21 @@ const Login = () => {
       userName: name,
       image: picture,
     };
-    console.log(doc);
-    // client.createIfNotExists(doc).then(() => {
-    //   navigate('/', { replace: true });
-    // });
+    console.log(localStorage);
 
+    // set logged in to true!
+    setLoggedIn(true);
   }
 
   return (
-    <div className="">
+    <Grid container alignItems="center" justifyContent="center">
+    <Grid item xs={12}>
+      <div>
+        <p>aesthetic intro text here lmao</p>
+      </div>
+    </Grid>
+    <Grid item xs={2}>
+    <div className="login-button">
           <div className="">
             <GoogleOAuthProvider 
                 // clientId={`${process.env.REACT_APP_GOOGLE_API_TOKEN}`}
@@ -55,6 +65,8 @@ const Login = () => {
             </GoogleOAuthProvider>
           </div>
     </div>
+    </Grid>
+    </Grid>
   )
 }
 
