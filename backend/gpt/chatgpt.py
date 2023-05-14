@@ -23,4 +23,4 @@ class GPT:
 if __name__=="__main__":
 	gpt = GPT(open('prompt.txt','r').read())
 	print(gpt.messages)
-	print(gpt.ask(open('example_assignment.txt','r').read()))
+	print(gpt.ask(open('distfinal.txt','r').read()))

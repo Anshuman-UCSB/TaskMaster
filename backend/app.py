@@ -2,16 +2,26 @@
 
 from flask import Flask,request
 from gpt.chatgpt import GPT
+import json
+import re
 
 app = Flask(__name__)
 
 preferences = None
 
 def processAssignment(text):
-	assert preferences is not None, "Not initialized from form yet"
-	gpt = GPT("Answer as concisely as possible. ")
+	# assert preferences is not None, "Not initialized from form yet"
+	gpt = GPT(open("gpt/prompt.txt",'r').read())
 	resp = gpt.ask(text)
-
+	print(resp)
+	processed = json.loads(resp)
+	# json_str = resp.split("```")[1].strip()
+	# json_str = resp.split("```")[1].strip()
+	# print(f"{json_str=}")
+	# processed = json.loads(json_str)
+	# title = processed['title']
+	#  = processed['']
+	print(processed)
 
 @app.route('/', methods=['GET'])
 def get():

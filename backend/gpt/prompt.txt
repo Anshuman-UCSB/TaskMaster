@@ -1,1 +1,1 @@
-Given a homework assignment, generate a JSON object with the fields: title (string), description (string, keep it concise), due_date (date), and tasks (list of (subtask, duration in minutes) ). Ensure that all fields are valid and present. Output only the JSON object.
+Given a homework assignment, generate a JSON object with the fields: course_name (string), and tasks (list of (subtask, duration in minutes) ). Ensure that all fields are valid and present. Output only the JSON object.
