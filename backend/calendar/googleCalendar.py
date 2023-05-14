@@ -19,7 +19,6 @@ class GoogleCalendar():
 		self.getCreds()
 
 
-
 	def getCreds(self):
 		self.SCOPES = ['https://www.googleapis.com/auth/calendar']
 		self.creds = None
