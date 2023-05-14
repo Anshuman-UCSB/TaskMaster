@@ -54,7 +54,7 @@ class GoogleCalendar():
 
 			if not events:
 				debug('No upcoming events found.')
-				return
+				return []
 			
 			for event in events:
 				start = datetime.datetime.fromisoformat(event['start'].get('dateTime', event['start'].get('date')), )
@@ -69,7 +69,6 @@ class GoogleCalendar():
 		return events_list
 
 	def getAvailableTime(self, duration, start=9, end=0):
-
 		events = self.parseEvents()
 		bid = getNextHour()
 		while bid < addWeeks(bid,3):
@@ -136,16 +135,14 @@ class GoogleCalendar():
 			# print('events', events)
 
 			if not events:
-				print('No upcoming events found.')
+				debug('No upcoming events found.')
 				return
 			
 			for event in events:
 				service.events().delete(calendarId='primary', eventId=event['id']).execute()
 
 		except HttpError as error:
-			print('An error occurred: %s' % error)
-		
-		return 'stub'
+			debug('An error occurred: %s' % error)
 
 
 	def deleteEvents(self, name = 'API test event'):
@@ -161,15 +158,13 @@ class GoogleCalendar():
 			# print('events', events)
 
 			if not events:
-				print('No upcoming events found.')
+				debug('No upcoming events found.')
 				return
 			
 			for event in events:
 				if event['summary'] == name:
 					service.events().delete(calendarId='primary', eventId=event['id']).execute()
-					print('deleted event', event['id'])	
+					debug('deleted event', event['id'])	
 
 		except HttpError as error:
-			print('An error occurred: %s' % error)
-		
-		return 'stub'
+			debug('An error occurred: %s' % error)
