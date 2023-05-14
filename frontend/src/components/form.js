@@ -3,6 +3,25 @@ import {ToggleButtonGroup, ToggleButton, Button, Grid, Item, TextField} from '@m
 import Filedrop from './filedrop.js';
 import Textinput from './textinput.js';
 
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: '#bdebd7',
+      main: '#73cea7',
+      dark: '#bdebd7',
+      contrastText: '#000',
+    },
+    secondary: {
+      light: '#000',
+      main: '#000',
+      dark: '#000',
+      contrastText: '#000',
+    },
+  },
+});
+
 // slider (text input or pdf)
 // button to add & send data to backend
 
@@ -61,24 +80,28 @@ function Form() {
       // localhost:5000/assignment/text
     }
 
-    // let input;
-    // if (type === "file") {
-    //     input = <Filedrop />;
-    // } else {
-    //     input = <Textinput onChange={(v) => setText(v.target.value)}/>;
-    // }
+    let input;
+    if (type === "file") {
+        input = <Filedrop />;
+    } else {
+        input = <Textinput onChange={(v) => setText(v.target.value)}/>;
+    }
 
     return (
       <div className="form">
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <ThemeProvider theme={theme}>
+      <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} flexDirection="row">
       <Grid item xs={12}>
         <div className="toggle-button">
         <ToggleButtonGroup
-        color="primary"
+        color="secondary"
         value={type}
         exclusive
         onChange={handleChange}
         aria-label="Platform"
+        style={{
+        backgroundColor: "#73cea7",
+    }}
         >
             <ToggleButton value="text">Text</ToggleButton>
             <ToggleButton value="file">File</ToggleButton>
@@ -103,9 +126,15 @@ function Form() {
         <Grid item xs={12}>
         <Button 
         variant="contained"
-        onClick={submitInfo}>Submit</Button>
+        onClick={submitInfo}
+        style={{
+        backgroundColor: "##bdebd7",
+        }}
+        >Submit</Button>
         </Grid>
+
       </Grid>
+        </ThemeProvider>
       </div>
     );
   }
