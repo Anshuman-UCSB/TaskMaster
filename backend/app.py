@@ -35,7 +35,7 @@ def processAssignment(text):
 			print("swapping")
 			task_duration,task_name = task_name,task_duration
 		print(f"{task_duration=},{task_name=}")
-		task_duration = max(task_duration,60*4)
+		task_duration = min(task_duration,60*4)
 		task_time = gc.getAvailableTime(task_duration)
 		gc.createEvent(task_time,
 				utils.addMinutes(task_time, task_duration),

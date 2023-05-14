@@ -92,7 +92,7 @@ class GoogleCalendar():
 	def createEvent(self, start, end, name, description):
 		try:
 			service = build('calendar', 'v3', credentials=self.creds)
-
+			
 			event = {
 				'summary': name,
 				'description': description,
